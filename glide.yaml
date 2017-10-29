@@ -1,0 +1,3 @@
+package: github.com/shuho-api
+import:
+- package: github.com/lib/pq
