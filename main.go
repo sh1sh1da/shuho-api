@@ -1,26 +1,28 @@
 package main
 
 import (
-	// "database/sql"
+	"database/sql"
 	"fmt"
-	// _ "github.com/lib/pq"
+	_ "github.com/lib/pq"
 	"html"
-	// "log"
+	"log"
 	"net/http"
 	"os"
 )
 
 func main() {
 	port := os.Getenv("PORT")
-	dbHost := os.Getenv("DB_HOST")
-	dbUser := os.Getenv("DB_USER")
-	dbPassword := os.Getenv("DB_PASSWORD")
-	dbName = os.Getenv("DB_NAME")
-	tableName = os.Getenv("TABLE_NAME")
+	dbURL := os.Getenv("DATABASE_URL")
+	// dbHost := os.Getenv("DB_HOST")
+	// dbUser := os.Getenv("DB_USER")
+	// dbPassword := os.Getenv("DB_PASSWORD")
+	// dbName := os.Getenv("DB_NAME")
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Hello, %q\n", html.EscapeString(r.URL.Path))
-		db, err := sql.Open("postgres", "user=" + dbUser + "password=" + dbPassword + "dbname=" + dbName)
+		// dbConf := "host=" + dbHost + " user=" + dbUser + " password=" + dbPassword + " dbname=" + dbName + " sslmode=disable"
+		// db, err := sql.Open("postgres", dbConf)
+		db, err := sql.Open("postgres", dbURL)
 		fmt.Printf("%v\n", db)
 		if err != nil {
 			fmt.Println("failed to connect to db")
@@ -41,7 +43,7 @@ func main() {
 				//log.Fatal("scan error: %v", err)
 			}
 			//fmt.Printf("id: %d, value: %d\n", id, value)
-			//fmt.Fprintf(w, "id: %d, value: %d\n", id, value)
+			fmt.Fprintf(w, "id: %d, value: %d\n", id, value)
 		}
 	})
 	log.Fatal(http.ListenAndServe(":" + port, nil))
