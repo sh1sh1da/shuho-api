@@ -19,14 +19,14 @@ func main() {
 		db, err := sql.Open("postgres", dbURL)
 		fmt.Printf("%v\n", db)
 		if err != nil {
-			fmt.Println("failed to connect to db")
+			log.Fatal("failed to connect to db")
 		}
 		defer db.Close()
 
 		rows, err := db.Query("select * from test;")
 		fmt.Printf("%v\n", rows)
 		if err != nil {
-			fmt.Println("db select error")
+			log.Fatal("db select error")
 		}
 
 		for rows.Next() {
