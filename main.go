@@ -31,10 +31,10 @@ func main() {
 			var value int
 			err := rows.Scan(&id, &value)
 			if err != nil {
-				log.Fatal("scan error: %v", err)
+				//log.Fatal("scan error: %v", err)
 			}
-			fmt.Printf("id: %d, value: %d\n", id, value)
-			fmt.Fprintf(w, "id: %d, value: %d\n", id, value)
+			//fmt.Printf("id: %d, value: %d\n", id, value)
+			//fmt.Fprintf(w, "id: %d, value: %d\n", id, value)
 		}
 	})
 
