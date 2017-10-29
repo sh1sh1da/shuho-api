@@ -7,9 +7,11 @@ import (
 	"html"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
+	port := os.Getenv("PORT")
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Hello, %q\n", html.EscapeString(r.URL.Path))
 
@@ -37,6 +39,7 @@ func main() {
 			//fmt.Fprintf(w, "id: %d, value: %d\n", id, value)
 		}
 	})
+	http.ListenAndServe(":"+port, nil)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
