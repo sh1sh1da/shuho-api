@@ -2,12 +2,11 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	_ "github.com/lib/pq"
-	"html"
 	"log"
 	"net/http"
 	"os"
+	"github.com/labstack/echo"
 )
 
 func main() {
@@ -19,8 +18,14 @@ func main() {
 	}
 	defer db.Close()
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello, %q\n", html.EscapeString(r.URL.Path))
+	e := echo.New()
+
+	e.GET("/hoge", func(c echo.Context) error {
+		return c.String(http.StatusOK, "hoge")
+	})
+
+	e.GET("/", func(c echo.Context) error {
+		c.String(http.StatusOK, "Hello")
 
 		rows, err := db.Query("select * from test;")
 		if err != nil {
@@ -34,27 +39,14 @@ func main() {
 			if err != nil {
 				log.Fatal("scan error: %v", err)
 			}
-			fmt.Fprintf(w, "id: %d, value: %d\n", id, value)
-		}
-	})
-
-	http.HandleFunc("/users", func(w http.ResponseWriter, r *http.Request) {
-		query := `select * from "user"`
-		rows, err := db.Query(query)
-		if err != nil {
-			log.Fatalf("unable to select from db. err: %v", err);
-		}
-
-		for rows.Next() {
-			var id int
-			var name string
-			err := rows.Scan(&id, &name)
-			if err != nil {
-				log.Fatal("scan error: %v", err)
+			jsonMap := map[string]int{
+				"id": id,
+				"value": value,
 			}
-			fmt.Fprintf(w, "id: %d, name: %s\n", id, name)
+			return c.JSON(http.StatusOK, jsonMap)
 		}
+		return nil
 	})
 
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	log.Fatal(e.Start(":" + port))
 }
