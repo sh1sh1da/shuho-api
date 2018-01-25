@@ -9,13 +9,19 @@
 
 [[projects]]
   name = "github.com/labstack/gommon"
-  packages = ["color","log"]
+  packages = [
+    "color",
+    "log"
+  ]
   revision = "57409ada9da0f2afad6664c49502f8c50fbd8476"
   version = "0.2.3"
 
 [[projects]]
   name = "github.com/lib/pq"
-  packages = [".","oid"]
+  packages = [
+    ".",
+    "oid"
+  ]
   revision = "b609790bd85edf8e9ab7e0f8912750a786177bcf"
 
 [[projects]]
@@ -45,7 +51,10 @@
 [[projects]]
   branch = "master"
   name = "golang.org/x/crypto"
-  packages = ["acme","acme/autocert"]
+  packages = [
+    "acme",
+    "acme/autocert"
+  ]
   revision = "94eea52f7b742c7cbe0b03b22f0c4c8631ece122"
 
 [[projects]]
@@ -57,6 +66,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "dab6c72121bf74e05e4042fd6286590f061122639e2238fad4db9a7f2d642d19"
+  inputs-digest = "678afe37329881966aa63871c6655b4d410cb7046a4613b81c6a524b96919f56"
   solver-name = "gps-cdcl"
   solver-version = 1
