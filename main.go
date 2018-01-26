@@ -33,12 +33,13 @@ func main() {
 
 	e.POST("/users", func(c echo.Context) error {
 		// FIXME:クソ実装しています
-		username := c.Param("username")
-		password := c.Param("password")
-
-		log.Println("username: " + username)
-		log.Println("password: " + password)
-		db.Query("insert into shuho_user values('" + username + "', '" + password + "')")
+		u := new(user)
+		if err := c.Bind(u); err != nil {
+			log.Print(err)
+		}
+		log.Println("username: " + u.ID)
+		log.Println("password: " + u.Password)
+		db.Query("insert into shuho_user values('" + u.ID + "', '" + u.Password + "')")
 		return c.String(http.StatusOK, "Add user!!")
 	})
 
