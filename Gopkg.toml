@@ -26,3 +26,5 @@
 [[constraint]]
   name = "github.com/labstack/echo"
   version = "3.2.5"
+[metadata.heroku]
+  root-package = "github.com/sh1sh1da/shuho-api"
