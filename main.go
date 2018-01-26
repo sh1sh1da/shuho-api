@@ -2,11 +2,11 @@ package main
 
 import (
 	"database/sql"
+	"github.com/labstack/echo"
 	_ "github.com/lib/pq"
 	"log"
 	"net/http"
 	"os"
-	"github.com/labstack/echo"
 )
 
 func main() {
@@ -40,7 +40,7 @@ func main() {
 				log.Fatal("scan error: %v", err)
 			}
 			jsonMap := map[string]int{
-				"id": id,
+				"id":    id,
 				"value": value,
 			}
 			return c.JSON(http.StatusOK, jsonMap)
