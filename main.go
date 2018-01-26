@@ -27,19 +27,19 @@ func main() {
 	e.GET("/", func(c echo.Context) error {
 		c.String(http.StatusOK, "Hello")
 
-		rows, err := db.Query("select * from test;")
+		rows, err := db.Query("select * from shuho_user;")
 		if err != nil {
 			log.Fatal("db select error")
 		}
 
 		for rows.Next() {
-			var id int
-			var value int
+			var id string
+			var value string
 			err := rows.Scan(&id, &value)
 			if err != nil {
 				log.Fatal("scan error: %v", err)
 			}
-			jsonMap := map[string]int{
+			jsonMap := map[string]string{
 				"id":    id,
 				"value": value,
 			}
