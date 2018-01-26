@@ -9,6 +9,13 @@ import (
 	"os"
 )
 
+type (
+	user struct {
+		ID string `json:"id"`
+		Password string `json:"password"`
+	}
+)
+
 func main() {
 	port := os.Getenv("PORT")
 	dbURL := os.Getenv("DATABASE_URL")
@@ -24,6 +31,17 @@ func main() {
 		return c.String(http.StatusOK, "hoge")
 	})
 
+	e.POST("/users", func(c echo.Context) error {
+		// FIXME:クソ実装しています
+		username := c.Param("username")
+		password := c.Param("password")
+
+		log.Println("username: " + username)
+		log.Println("password: " + password)
+		db.Query("insert into shuho_user values('" + username + "', '" + password + "')")
+		return c.String(http.StatusOK, "Add user!!")
+	})
+
 	e.GET("/", func(c echo.Context) error {
 		c.String(http.StatusOK, "Hello")
 
@@ -32,6 +50,7 @@ func main() {
 			log.Fatal("db select error")
 		}
 
+		arrayUsers := []map[string]string{}
 		for rows.Next() {
 			var id string
 			var value string
@@ -43,9 +62,9 @@ func main() {
 				"id":    id,
 				"value": value,
 			}
-			return c.JSON(http.StatusOK, jsonMap)
+			arrayUsers = append(arrayUsers, jsonMap)
 		}
-		return nil
+		return c.JSON(http.StatusOK, arrayUsers)
 	})
 
 	log.Fatal(e.Start(":" + port))
