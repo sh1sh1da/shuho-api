@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 	_ "github.com/lib/pq"
 	"log"
 	"net/http"
@@ -26,6 +27,7 @@ func main() {
 	defer db.Close()
 
 	e := echo.New()
+	e.Use(middleware.CORS())
 
 	e.GET("/hoge", func(c echo.Context) error {
 		return c.String(http.StatusOK, "hoge")
@@ -44,8 +46,6 @@ func main() {
 	})
 
 	e.GET("/", func(c echo.Context) error {
-		c.String(http.StatusOK, "Hello")
-
 		rows, err := db.Query("select * from shuho_user;")
 		if err != nil {
 			log.Fatal("db select error")
@@ -54,14 +54,14 @@ func main() {
 		arrayUsers := []map[string]string{}
 		for rows.Next() {
 			var id string
-			var value string
-			err := rows.Scan(&id, &value)
+			var password string
+			err := rows.Scan(&id, &password)
 			if err != nil {
 				log.Fatal("scan error: %v", err)
 			}
 			jsonMap := map[string]string{
 				"id":    id,
-				"value": value,
+				"password": password,
 			}
 			arrayUsers = append(arrayUsers, jsonMap)
 		}

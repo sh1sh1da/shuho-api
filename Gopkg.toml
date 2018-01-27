@@ -28,3 +28,7 @@
   version = "3.2.5"
 [metadata.heroku]
   root-package = "github.com/sh1sh1da/shuho-api"
+
+[[constraint]]
+  name = "github.com/dgrijalva/jwt-go"
+  version = "3.1.0"
