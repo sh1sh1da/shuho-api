@@ -45,7 +45,7 @@ func main() {
 		return c.String(http.StatusOK, "Add user!!")
 	})
 
-	e.GET("/", func(c echo.Context) error {
+	e.GET("/users", func(c echo.Context) error {
 		rows, err := db.Query("select * from shuho_user;")
 		if err != nil {
 			log.Fatal("db select error")
