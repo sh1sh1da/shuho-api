@@ -2,10 +2,55 @@
 
 
 [[projects]]
+  name = "github.com/antonlindstrom/pgstore"
+  packages = ["."]
+  revision = "a407030ba6d0efd9a1aad3d0cfc18a9b13d2f2e7"
+  version = "1.0.0"
+
+[[projects]]
+  name = "github.com/boj/redistore"
+  packages = ["."]
+  revision = "fc113767cd6b051980f260d6dbe84b2740c46ab0"
+  version = "v1.2"
+
+[[projects]]
   name = "github.com/dgrijalva/jwt-go"
   packages = ["."]
   revision = "dbeaa9332f19a944acb5736b4456cfcc02140e29"
   version = "v3.1.0"
+
+[[projects]]
+  name = "github.com/garyburd/redigo"
+  packages = [
+    "internal",
+    "redis"
+  ]
+  revision = "d1ed5c67e5794de818ea85e6b522fda02623a484"
+  version = "v1.4.0"
+
+[[projects]]
+  name = "github.com/gorilla/context"
+  packages = ["."]
+  revision = "1ea25387ff6f684839d82767c1733ff4d4d15d0a"
+  version = "v1.1"
+
+[[projects]]
+  name = "github.com/gorilla/securecookie"
+  packages = ["."]
+  revision = "667fe4e3466a040b780561fe9b51a83a3753eefc"
+  version = "v1.1"
+
+[[projects]]
+  name = "github.com/gorilla/sessions"
+  packages = ["."]
+  revision = "ca9ada44574153444b00d3fd9c8559e4cc95f896"
+  version = "v1.1"
+
+[[projects]]
+  name = "github.com/ipfans/echo-session"
+  packages = ["."]
+  revision = "53b07854989517a32290e9ab5b3c3ec6d9e2f13c"
+  version = "v3.1.1"
 
 [[projects]]
   name = "github.com/labstack/echo"
@@ -13,8 +58,8 @@
     ".",
     "middleware"
   ]
-  revision = "0473c51f1dbd83487effce00702571d19033a6e5"
-  version = "3.2.5"
+  revision = "b338075a0fc6e1a0683dbf03d09b4957a289e26f"
+  version = "3.2.6"
 
 [[projects]]
   name = "github.com/labstack/gommon"
@@ -28,12 +73,13 @@
   version = "0.2.3"
 
 [[projects]]
+  branch = "master"
   name = "github.com/lib/pq"
   packages = [
     ".",
     "oid"
   ]
-  revision = "b609790bd85edf8e9ab7e0f8912750a786177bcf"
+  revision = "19c8e9ad00952ce0c64489b60e8df88bb16dd514"
 
 [[projects]]
   name = "github.com/mattn/go-colorable"
@@ -46,6 +92,12 @@
   packages = ["."]
   revision = "0360b2af4f38e8d38c7fce2a9f4e702702d73a39"
   version = "v0.0.3"
+
+[[projects]]
+  name = "github.com/pkg/errors"
+  packages = ["."]
+  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
+  version = "v0.8.0"
 
 [[projects]]
   branch = "master"
@@ -66,17 +118,17 @@
     "acme",
     "acme/autocert"
   ]
-  revision = "94eea52f7b742c7cbe0b03b22f0c4c8631ece122"
+  revision = "1875d0a70c90e57f11972aefd42276df65e895b9"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "8b4580aae2a0dd0c231a45d3ccb8434ff533b840"
+  revision = "ff2a66f350cefa5c93a634eadb5d25bb60c85a9c"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "ee45556e7b79b851318bb4d79db01782f985193b8fcd90023a1634ce3255d384"
+  inputs-digest = "8b2688a07a0147c0284c7fd19c59220a1b727f823e906b123a7efff9bf00d200"
   solver-name = "gps-cdcl"
   solver-version = 1
