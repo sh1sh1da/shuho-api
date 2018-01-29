@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"github.com/ipfans/echo-session"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	_ "github.com/lib/pq"
@@ -28,6 +29,12 @@ func main() {
 
 	e := echo.New()
 	e.Use(middleware.CORS())
+
+	store, err := session.NewRedisStore(32, "tcp", "localhost:6379", "", []byte("secret"))
+	if err != nil {
+		log.Fatal("redis error")
+	}
+	e.Use(session.Sessions("GSESSION", store))
 
 	e.POST("/users", func(c echo.Context) error {
 		// FIMXE:クソ実装しています
@@ -64,7 +71,10 @@ func main() {
 		return c.JSON(http.StatusOK, arrayUsers)
 	})
 
-
+	e.POST("/session", func(c echo.Context) error {
+		// TODO: 実装するよ
+		return nil
+	})
 
 	log.Fatal(e.Start(":" + port))
 }
