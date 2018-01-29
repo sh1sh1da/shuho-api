@@ -29,12 +29,8 @@ func main() {
 	e := echo.New()
 	e.Use(middleware.CORS())
 
-	e.GET("/hoge", func(c echo.Context) error {
-		return c.String(http.StatusOK, "hoge")
-	})
-
 	e.POST("/users", func(c echo.Context) error {
-		// FIXME:クソ実装しています
+		// FIMXE:クソ実装しています
 		u := new(user)
 		if err := c.Bind(u); err != nil {
 			log.Print(err)
@@ -67,6 +63,8 @@ func main() {
 		}
 		return c.JSON(http.StatusOK, arrayUsers)
 	})
+
+
 
 	log.Fatal(e.Start(":" + port))
 }
