@@ -1,5 +1,5 @@
 # shuho api
-## Endpoints
- - GET /groups
- - POST /groups
- 
+## 構築手順
+ 1. ぽすぐれをたてる(shuho_userテーブルがないとだめ）
+ 2. redisをたてる（よしなにやってくれ）
+ 3. なんでもいいからmain.goを走らせてくれ
