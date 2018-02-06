@@ -1,6 +1,8 @@
 package main
 
 import (
+	"github.com/garyburd/redigo/redis"
+	"github.com/soveran/redisurl"
 	"database/sql"
 	"github.com/ipfans/echo-session"
 	"github.com/labstack/echo"
@@ -32,6 +34,10 @@ func main() {
 
 	// redisさん起動
 	store, err := session.NewRedisStore(32, "tcp", "localhost:6379", "", []byte("secret"))
+	// pool := redis.NewPool(func() (redis.Conn, error) {
+	// 	return redisurl.ConnectToURL("localhost:6379")
+	// }, 30)
+	// store, err := session.NewRedisStoreWithPool(pool, []byte("secret"))
 	if err != nil {
 		log.Fatal("redis error")
 	}

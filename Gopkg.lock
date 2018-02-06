@@ -101,6 +101,12 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/soveran/redisurl"
+  packages = ["."]
+  revision = "ac42ec99510b5f21d11560d316adcc5bc41f0915"
+
+[[projects]]
+  branch = "master"
   name = "github.com/valyala/bytebufferpool"
   packages = ["."]
   revision = "e746df99fe4a3986f4d4f79e13c1e0117ce9c2f7"
@@ -129,6 +135,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "8b2688a07a0147c0284c7fd19c59220a1b727f823e906b123a7efff9bf00d200"
+  inputs-digest = "3df1f067a1028cc21397622f2d7e7e747f6cad3c8f0028e2611edf489571555f"
   solver-name = "gps-cdcl"
   solver-version = 1
