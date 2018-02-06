@@ -30,11 +30,67 @@ func main() {
 	e := echo.New()
 	e.Use(middleware.CORS())
 
+	// redisさん起動
 	store, err := session.NewRedisStore(32, "tcp", "localhost:6379", "", []byte("secret"))
 	if err != nil {
 		log.Fatal("redis error")
 	}
+
+	// sessionあるか確認する
 	e.Use(session.Sessions("GSESSION", store))
+	e.GET("/session", func(c echo.Context) error {
+		session := session.Default(c)
+		v := session.Get("session")
+		if v == nil { // not authorized
+			c.JSON(200, map[string]interface{}{
+				"authorized": false,
+			})
+		} else {  // authorized
+			c.JSON(200, map[string]interface{}{
+				"authorized": true,
+			})
+		}
+		return nil
+	})
+
+	// session作る
+	e.POST("/session", func(c echo.Context) error {
+		session := session.Default(c)
+		v := session.Get("session")
+		if v != nil {
+			log.Println("session already exists.")
+			return c.JSON(200, map[string]interface{}{
+				"authorized": true,
+			})
+		}
+
+		u := new(user)
+		if err := c.Bind(u); err != nil {
+			log.Print(err)
+		}
+		rows, err := db.Query("SELECT password FROM shuho_user WHERE id = '" + u.ID + "'")
+		if err != nil {
+			log.Fatal("db select error.")
+		}
+		var password string
+		for rows.Next() {
+			err = rows.Scan(&password)
+			if err != nil {
+				log.Fatal("db result scan error.")
+			}
+		}
+		if password != u.Password {
+			log.Println("id or password is invalid.")
+			return c.JSON(200, map[string]interface{}{
+				"authorized": false,
+			})
+		}
+		session.Set("session", true) // FIXME: 何セットしたらいいかわからん
+		session.Save()
+		return c.JSON(200, map[string]interface{}{
+				"authorized": true,
+		})
+	})
 
 	e.POST("/users", func(c echo.Context) error {
 		// FIMXE:クソ実装しています
@@ -69,11 +125,6 @@ func main() {
 			arrayUsers = append(arrayUsers, jsonMap)
 		}
 		return c.JSON(http.StatusOK, arrayUsers)
-	})
-
-	e.POST("/session", func(c echo.Context) error {
-		// TODO: 実装するよ
-		return nil
 	})
 
 	log.Fatal(e.Start(":" + port))
