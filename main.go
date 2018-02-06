@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/garyburd/redigo/redis"
-	"github.com/soveran/redisurl"
+	// "github.com/garyburd/redigo/redis"
+	// "github.com/soveran/redisurl"
 	"database/sql"
 	"github.com/ipfans/echo-session"
 	"github.com/labstack/echo"
