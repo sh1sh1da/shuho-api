@@ -15,7 +15,7 @@ import (
 
 type (
 	user struct {
-		ID string `json:"id"`
+		ID       string `json:"id"`
 		Password string `json:"password"`
 	}
 )
@@ -51,7 +51,7 @@ func main() {
 			c.JSON(200, map[string]interface{}{
 				"authorized": false,
 			})
-		} else {  // authorized
+		} else { // authorized
 			c.JSON(200, map[string]interface{}{
 				"authorized": true,
 			})
@@ -125,7 +125,7 @@ func main() {
 				log.Fatal("scan error: %v", err)
 			}
 			jsonMap := map[string]string{
-				"id":    id,
+				"id":       id,
 				"password": password,
 			}
 			arrayUsers = append(arrayUsers, jsonMap)
