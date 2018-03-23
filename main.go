@@ -1,16 +1,17 @@
 package main
 
 import (
-	"github.com/garyburd/redigo/redis"
-	"github.com/soveran/redisurl"
 	"database/sql"
+	"log"
+	"net/http"
+	"os"
+
+	"github.com/garyburd/redigo/redis"
 	"github.com/ipfans/echo-session"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	_ "github.com/lib/pq"
-	"log"
-	"net/http"
-	"os"
+	"github.com/soveran/redisurl"
 )
 
 type (
@@ -94,7 +95,7 @@ func main() {
 		session.Set("session", true) // FIXME: 何セットしたらいいかわからん
 		session.Save()
 		return c.JSON(200, map[string]interface{}{
-				"authorized": true,
+			"authorized": true,
 		})
 	})
 
@@ -131,6 +132,35 @@ func main() {
 			arrayUsers = append(arrayUsers, jsonMap)
 		}
 		return c.JSON(http.StatusOK, arrayUsers)
+	})
+
+	e.GET("/users/:id/shuho", func(c echo.Context) error {
+		userID := c.Param("id")
+		rows, err := db.Query("select shuho_user, content, created_at from shuho where shuho_user = '" + userID + "'")
+		if err != nil {
+			return err
+		}
+
+		var user string
+		var date string
+		var content string
+		arrayShuho := []map[string]string{}
+		for rows.Next() {
+			err = rows.Scan(&user, &content, &date)
+			jsonMap := map[string]string{
+				"user":    user,
+				"date":    date,
+				"content": content,
+			}
+			arrayShuho = append(arrayShuho, jsonMap)
+		}
+		return c.JSON(http.StatusOK, arrayShuho)
+	})
+
+	e.POST("/users/:id/shuho", func(c echo.Context) error {
+		userID := c.Param("id")
+		db.Query("insert into shuho (content, shuho_user) values ('hoge', '" + userID + "')")
+		return c.JSON(http.StatusOK, "Add shuho")
 	})
 
 	log.Fatal(e.Start(":" + port))
