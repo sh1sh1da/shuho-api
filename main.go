@@ -19,6 +19,9 @@ type (
 		ID       string `json:"id"`
 		Password string `json:"password"`
 	}
+	content struct {
+		Content string `json:"content"`
+	}
 )
 
 func main() {
@@ -159,7 +162,11 @@ func main() {
 
 	e.POST("/users/:id/shuho", func(c echo.Context) error {
 		userID := c.Param("id")
-		db.Query("insert into shuho (content, shuho_user, created_at) values ('hoge', '" + userID + "', current_date)")
+		content := new(content)
+		if err := c.Bind(content); err != nil {
+			log.Print(err)
+		}
+		db.Query("insert into shuho (content, shuho_user, created_at) values ('" + content.Content + "', '" + userID + "', current_date)")
 		return c.JSON(http.StatusOK, "Add shuho")
 	})
 
