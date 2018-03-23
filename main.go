@@ -159,7 +159,7 @@ func main() {
 
 	e.POST("/users/:id/shuho", func(c echo.Context) error {
 		userID := c.Param("id")
-		db.Query("insert into shuho (content, shuho_user) values ('hoge', '" + userID + "')")
+		db.Query("insert into shuho (content, shuho_user, created_at) values ('hoge', '" + userID + "', current_date)")
 		return c.JSON(http.StatusOK, "Add shuho")
 	})
 
