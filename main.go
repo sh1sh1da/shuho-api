@@ -52,7 +52,7 @@ func main() {
 		session := session.Default(c)
 		v := session.Get("session")
 		if v == nil { // not authorized
-			c.JSON(200, map[string]interface{}{
+			c.JSON(401, map[string]interface{}{
 				"authorized": false,
 			})
 		} else { // authorized
@@ -138,6 +138,14 @@ func main() {
 	})
 
 	e.GET("/users/:id/shuho", func(c echo.Context) error {
+		session := session.Default(c)
+		v := session.Get("session")
+		if v == nil { // not authorized
+			return c.JSON(401, map[string]interface{}{
+				"authorized": false,
+			})
+		}
+
 		userID := c.Param("id")
 		rows, err := db.Query("select shuho_user, content, created_at from shuho where shuho_user = '" + userID + "'")
 		if err != nil {
@@ -161,6 +169,14 @@ func main() {
 	})
 
 	e.POST("/users/:id/shuho", func(c echo.Context) error {
+		session := session.Default(c)
+		v := session.Get("session")
+		if v == nil { // not authorized
+			return c.JSON(401, map[string]interface{}{
+				"authorized": false,
+			})
+		}
+
 		userID := c.Param("id")
 		content := new(content)
 		if err := c.Bind(content); err != nil {
