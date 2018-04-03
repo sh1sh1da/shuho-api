@@ -119,6 +119,14 @@ func main() {
 	})
 
 	e.GET("/users", func(c echo.Context) error {
+		session := session.Default(c)
+		v := session.Get("session")
+		if v == nil { // not authorized
+			return c.JSON(401, map[string]interface{}{
+				"authorized": false,
+			})
+		}
+
 		rows, err := db.Query("select * from shuho_user;")
 		if err != nil {
 			log.Fatal("db select error")
