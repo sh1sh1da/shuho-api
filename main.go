@@ -35,7 +35,11 @@ func main() {
 	defer db.Close()
 
 	e := echo.New()
-	e.Use(middleware.CORS())
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins:     []string{"http://localhost:4200"},
+		AllowMethods:     []string{echo.GET, echo.HEAD, echo.PUT, echo.PATCH, echo.POST, echo.DELETE, echo.OPTIONS},
+		AllowCredentials: true,
+	}))
 
 	// redisさん起動
 	pool := redis.NewPool(func() (redis.Conn, error) {
